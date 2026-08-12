@@ -422,13 +422,16 @@ button, input, select, textarea { font: inherit; color: inherit; }
 /* ── Galería ────────────────────────────────────── */
 .gallery { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--s-3); }
 .shot { margin: 0; }
-.shot__ph {
-  aspect-ratio: 4 / 3; border-radius: var(--r-md);
-  background: linear-gradient(150deg, #EEF1F6 0%, #E2E7EF 100%);
-  border: 1px dashed var(--border-2);
-  display: grid; place-items: center;
+.shot img {
+  width: 100%; height: auto;
+  aspect-ratio: 4 / 3; object-fit: cover;
+  border-radius: var(--r-md);
+  border: 1px solid var(--border);
+  background: var(--muted); /* reserva el hueco mientras carga: evita salto de layout */
+  box-shadow: var(--sh-1);
+  transition: box-shadow var(--t) var(--ease), transform var(--t) var(--ease);
 }
-.shot__ph svg { width: 26px; height: 26px; fill: none; stroke: #9AA8BC; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+.shot:hover img { box-shadow: var(--sh-3); transform: translateY(-2px); }
 .shot figcaption {
   margin-top: var(--s-2); font-size: .8125rem; line-height: 1.35;
   font-weight: 500; color: var(--text-soft);
@@ -656,6 +659,7 @@ body { padding-bottom: calc(66px + env(safe-area-inset-bottom, 0px)); }
 
 /* ═══ Accesibilidad: movimiento reducido ══════════ */
 @media (prefers-reduced-motion: reduce) {
+  .shot:hover img { transform: none; }
   html { scroll-behavior: auto; }
   *, *::before, *::after {
     animation-duration: .01ms !important;
